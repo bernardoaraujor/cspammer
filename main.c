@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
-    exitcode = cspammer_main(tps->dval, addr->sval, seed->sval, url->sval, port->ival, https->count, mwm->ival, depth->ival, sec->ival);
+    exitcode = cspammer_main(tps->dval, addr->sval, seed->sval, url->sval, (uint16_t*) port->ival, (uint8_t) https->count, (uint8_t*) mwm->ival, (uint32_t*) depth->ival, (uint8_t*) sec->ival);
 
 exit:
     /* deallocate each non-null entry in argtable[] */
