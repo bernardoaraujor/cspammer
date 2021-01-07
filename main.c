@@ -25,9 +25,12 @@ int cspammer_main(double *tps, const char** addr, const char** seed, const char*
 
     char bundle_hash[NUM_TRYTES_BUNDLE + 1] = {};
     char *msg = "CSpammer be spammin'!";
-    cspammer_err_t ret = cspammer_send(cspammer_ctx, *addr, 0, msg, bundle_hash);
-    bundle_hash[NUM_TRYTES_BUNDLE] = '\0';
-    log_info(cspammer_logger_id, "[%s:%d] Bundle hash: %s\n", __func__, __LINE__, bundle_hash);
+
+    while (true) {
+        cspammer_err_t ret = cspammer_send(cspammer_ctx, *addr, 0, msg, bundle_hash);
+        bundle_hash[NUM_TRYTES_BUNDLE] = '\0';
+        log_info(cspammer_logger_id, "[%s:%d] Bundle hash: %s\n", __func__, __LINE__, bundle_hash);
+    }
 
     cspammer_destroy(&cspammer_ctx);
     free(ca_pem);
