@@ -2,13 +2,9 @@
 #include "cspammer.h"
 
 #define MAX_PEM_LEN 4 * 1024
-#define SEED "DEJUXV9ZQMIEXTWJJHJPLAWMOEKGAYDNALKSMCLG9APR9LCKHMLNZVCRFNFEPMGOBOYYIKJNYWSAKVPAI"
-#define ADDR "FTJE9MUWNUCQOPYRDPEOCVRCZ9QDCYVZLRJUZLZ9SLAHFAXAWHYXLOZIUVJWABOAJOESYRBPYP9LJXT99"
-
 static cspammer_ctx_t* cspammer_ctx;
 
-
-int cspammer_main(double *tps, const char** seed, const char** url, uint16_t *port, uint8_t https, uint8_t *mwm, uint32_t *depth, uint8_t *sec) {
+int cspammer_main(double *tps, const char** addr, const char** seed, const char** url, uint16_t *port, uint8_t https, uint8_t *mwm, uint32_t *depth, uint8_t *sec) {
     char *ca_pem = NULL;
     if (https) {
         ca_pem = malloc(MAX_PEM_LEN);
@@ -29,7 +25,7 @@ int cspammer_main(double *tps, const char** seed, const char** url, uint16_t *po
 
     char bundle_hash[NUM_TRYTES_BUNDLE + 1] = {};
     char *msg = "CSpammer be spammin'!";
-    cspammer_err_t ret = cspammer_send(cspammer_ctx, ADDR, 0, msg, bundle_hash);
+    cspammer_err_t ret = cspammer_send(cspammer_ctx, *addr, 0, msg, bundle_hash);
     bundle_hash[NUM_TRYTES_BUNDLE] = '\0';
     log_info(cspammer_logger_id, "[%s:%d] Bundle hash: %s\n", __func__, __LINE__, bundle_hash);
 
@@ -42,8 +38,9 @@ int cspammer_main(double *tps, const char** seed, const char** url, uint16_t *po
 int main(int argc, char *argv[]) {
 
     struct arg_lit *help = arg_lit0(NULL,"help","print this help and exit");
+    struct arg_str *addr = arg_str1("a", "addr", "<addr>", "Target IOTA Address Trytes");
     struct arg_dbl *tps = arg_dbl1("t", "tps", "<tps>", "Spamrate (Tx Per Second)");
-    struct arg_str *seed = arg_str1("s", "seed", "<seed>", "Client Seed");
+    struct arg_str *seed = arg_str1("s", "seed", "<seed>", "Client Seed Trytes");
     struct arg_str *url = arg_str1("u", "url", "<url>", "Node's URL");
     struct arg_int *port = arg_int1("p", "port", "<port>", "Node's Port");
     struct arg_lit *https = arg_lit0(NULL, "https", "Node has HTTPS");
@@ -56,7 +53,7 @@ int main(int argc, char *argv[]) {
     int nerrors;
     int exitcode=0;
 
-    void* argtable[] = {help, tps, seed, url, port, https, mwm, depth, sec, end};
+    void* argtable[] = {help, addr, tps, seed, url, port, https, mwm, depth, sec, end};
 
     /* verify the argtable[] entries were allocated sucessfully */
     if (arg_nullcheck(argtable) != 0) {
@@ -90,7 +87,7 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
-    exitcode = cspammer_main(tps->dval, seed->sval, url->sval, port->ival, https->count, mwm->ival, depth->ival, sec->ival);
+    exitcode = cspammer_main(tps->dval, addr->sval, seed->sval, url->sval, port->ival, https->count, mwm->ival, depth->ival, sec->ival);
 
 exit:
     /* deallocate each non-null entry in argtable[] */
