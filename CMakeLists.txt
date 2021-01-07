@@ -37,17 +37,15 @@ include(cmake/argtable3.cmake)
 # libs in the sandbox
 link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
-
-
 # your source files
 add_executable(${CMAKE_PROJECT_NAME}
-        "main.c"
-        "cspammer.c"
-        "cspammer_logger.c"
+        "src/main.c"
+        "src/cspammer.c"
+        "src/cspammer_logger.c"
         )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-        "${PROJECT_SOURCE_DIR}"
+        "${PROJECT_SOURCE_DIR}/src"
         "${CMAKE_INSTALL_PREFIX}/include"
         "${CMAKE_INSTALL_PREFIX}/include/cjson"
         "${iota.c_SOURCE_DIR}"
