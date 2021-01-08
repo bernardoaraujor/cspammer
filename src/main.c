@@ -41,14 +41,14 @@ int cspammer_main(const char** addr, const char** seed, const char** url, uint16
 
 int main(int argc, char *argv[]) {
 
-    struct arg_lit *help = arg_lit0(NULL,"help","print this help and exit");
+    struct arg_lit *help = arg_lit0("h","help","print this help and exit");
     struct arg_str *addr = arg_str1("a", "addr", "<addr>", "Target IOTA Address Trytes");
     // struct arg_dbl *tps = arg_dbl1("t", "tps", "<tps>", "Spamrate (Tx Per Second)");
     struct arg_str *seed = arg_str1("s", "seed", "<seed>", "Client Seed Trytes");
     struct arg_str *url = arg_str1("u", "url", "<url>", "Node's URL");
     struct arg_int *port = arg_int1("p", "port", "<port>", "Node's Port");
-    struct arg_lit *https = arg_lit0(NULL, "https", "Node has HTTPS");
-    struct arg_int *mwm = arg_int1("m", "mwm", "<mwm>", "Node Minimum Weight Magnitude (MWM)");
+    struct arg_lit *https = arg_lit0(NULL, "https", "Node has HTTPS (optional)");
+    struct arg_int *mwm = arg_int1("m", "mwm", "<mwm>", "Node's Minimum Weight Magnitude (MWM)");
     struct arg_int *depth = arg_int1("d", "depth", "<depth>", "Node's Merkle Tree Depth");
     struct arg_int *sec = arg_int1("y", "sec", "<security>", "Node's Security Level");
     struct arg_end *end = arg_end(20);
@@ -74,9 +74,9 @@ int main(int argc, char *argv[]) {
     /* special case: '--help' takes precedence over error reporting */
     if (help->count > 0)
     {
+        printf("IOTA 1.0 (Pre-Chrysalis pt.2) Client Spammer.\n\n");
         printf("Usage: %s", progname);
         arg_print_syntax(stdout,argtable,"\n");
-        printf("IOTA (Pre-Chrysalis pt.2) Client Spammer.\n\n");
         arg_print_glossary(stdout,argtable,"  %-10s %s\n");
         exitcode=0;
         goto exit;

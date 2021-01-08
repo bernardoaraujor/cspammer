@@ -21,19 +21,19 @@ $ make
 
 ```
 $ cspammer --help
-Usage: cspammer [--help] -a <addr> -t <tps> -s <seed> -u <url> -p <port> [--https] -m <mwm> -d <depth> -y <security>
-IOTA (Pre-Chrysalis pt.2) Client Spammer.
+IOTA 1.0 (Pre-Chrysalis pt.2) Client Spammer.
 
-  --help     print this help and exit
+Usage: cspammer [-h] -a <addr> -s <seed> -u <url> -p <port> [--https] -m <mwm> -d <depth> -y <security>
+  -h, --help print this help and exit
   -a, --addr=<addr> Target IOTA Address Trytes
-  -t, --tps=<tps> Spamrate (Tx Per Second)
   -s, --seed=<seed> Client Seed Trytes
   -u, --url=<url> Node's URL
   -p, --port=<port> Node's Port
-  --https    Node has HTTPS
-  -m, --mwm=<mwm> Node Minimum Weight Magnitude (MWM)
+  --https    Node has HTTPS (optional)
+  -m, --mwm=<mwm> Node's Minimum Weight Magnitude (MWM)
   -d, --depth=<depth> Node's Merkle Tree Depth
   -y, --sec=<security> Node's Security Level
+
 ```
 
 for example:
