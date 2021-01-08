@@ -4,7 +4,8 @@
 #define MAX_PEM_LEN 4 * 1024
 static cspammer_ctx_t* cspammer_ctx;
 
-int cspammer_main(double *tps, const char** addr, const char** seed, const char** url, uint16_t *port, uint8_t https, uint8_t *mwm, uint32_t *depth, uint8_t *sec) {
+// int cspammer_main(double *tps, const char** addr, const char** seed, const char** url, uint16_t *port, uint8_t https, uint8_t *mwm, uint32_t *depth, uint8_t *sec) {
+int cspammer_main(const char** addr, const char** seed, const char** url, uint16_t *port, uint8_t https, uint8_t *mwm, uint32_t *depth, uint8_t *sec) {
     char *ca_pem = NULL;
     if (https) {
         ca_pem = malloc(MAX_PEM_LEN);
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
 
     struct arg_lit *help = arg_lit0(NULL,"help","print this help and exit");
     struct arg_str *addr = arg_str1("a", "addr", "<addr>", "Target IOTA Address Trytes");
-    struct arg_dbl *tps = arg_dbl1("t", "tps", "<tps>", "Spamrate (Tx Per Second)");
+    // struct arg_dbl *tps = arg_dbl1("t", "tps", "<tps>", "Spamrate (Tx Per Second)");
     struct arg_str *seed = arg_str1("s", "seed", "<seed>", "Client Seed Trytes");
     struct arg_str *url = arg_str1("u", "url", "<url>", "Node's URL");
     struct arg_int *port = arg_int1("p", "port", "<port>", "Node's Port");
@@ -56,7 +57,8 @@ int main(int argc, char *argv[]) {
     int nerrors;
     int exitcode=0;
 
-    void* argtable[] = {help, addr, tps, seed, url, port, https, mwm, depth, sec, end};
+    // void* argtable[] = {help, addr, tps, seed, url, port, https, mwm, depth, sec, end};
+    void* argtable[] = {help, addr, seed, url, port, https, mwm, depth, sec, end};
 
     /* verify the argtable[] entries were allocated sucessfully */
     if (arg_nullcheck(argtable) != 0) {
@@ -90,7 +92,8 @@ int main(int argc, char *argv[]) {
         goto exit;
     }
 
-    exitcode = cspammer_main(tps->dval, addr->sval, seed->sval, url->sval, (uint16_t*) port->ival, (uint8_t) https->count, (uint8_t*) mwm->ival, (uint32_t*) depth->ival, (uint8_t*) sec->ival);
+    // exitcode = cspammer_main(tps->dval, addr->sval, seed->sval, url->sval, (uint16_t*) port->ival, (uint8_t) https->count, (uint8_t*) mwm->ival, (uint32_t*) depth->ival, (uint8_t*) sec->ival);
+    exitcode = cspammer_main(addr->sval, seed->sval, url->sval, (uint16_t*) port->ival, (uint8_t) https->count, (uint8_t*) mwm->ival, (uint32_t*) depth->ival, (uint8_t*) sec->ival);
 
 exit:
     /* deallocate each non-null entry in argtable[] */
