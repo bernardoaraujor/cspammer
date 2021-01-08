@@ -34,5 +34,9 @@ IOTA (Pre-Chrysalis pt.2) Client Spammer.
   -m, --mwm=<mwm> Node Minimum Weight Magnitude (MWM)
   -d, --depth=<depth> Node's Merkle Tree Depth
   -y, --sec=<security> Node's Security Level
+```
 
+for example:
+```
+$ cspammer --addr=PDVKAGKHVYKBLBRJZPP9JATUY9QYYXOMIQFPESXLSG9EHBCXSZKGSYWPGIOWGKHGNYTZYMOVPDMJDCUA9 --seed=HJTOWJRIZXGONIQZZGRNCKMJFSEJKRTZXDOQNAFDIOLIYBOHUDCARADLETVASHMYMWAWWRQHWEZUYONZ9 --url=nodes.iota.cafe --port=443 --https --mwm=14 --depth=13 --sec=2
 ```
